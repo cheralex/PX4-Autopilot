@@ -51,7 +51,7 @@
 #include <uORB/topics/parameter_update.h>
 
 
-#define ADDR			0x39	/**< I2C adress of NCP5623C */
+#define ADDR			0x38	/**< I2C adress of NCP5623C */
 
 #define NCP5623_LED_CURRENT	0x20	/**< Current register */
 #define NCP5623_LED_PWM0	0x40	/**< pwm0 register */
@@ -216,9 +216,9 @@ RGBLED_NPC5623C::send_led_rgb()
 	uint8_t brightness = 0x1f * _max_brightness;
 
 	msg[0] = NCP5623_LED_CURRENT | (brightness & 0x1f);
-	msg[2] = NCP5623_LED_PWM0 | (uint8_t(_r * _brightness) & 0x1f);
+        msg[2] = NCP5623_LED_PWM0 | (uint8_t(_b * _brightness) & 0x1f);
 	msg[4] = NCP5623_LED_PWM1 | (uint8_t(_g * _brightness) & 0x1f);
-	msg[6] = NCP5623_LED_PWM2 | (uint8_t(_b * _brightness) & 0x1f);
+        msg[6] = NCP5623_LED_PWM2 | (uint8_t(_r * _brightness) & 0x1f);
 
 	return transfer(&msg[0], 7, nullptr, 0);
 }
